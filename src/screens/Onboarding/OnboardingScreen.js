@@ -10,13 +10,10 @@ import {
   View,
 } from "react-native";
 import React, { useRef, useState } from "react";
-import Container from "../components/Container";
-import { COLORS } from "../constants/COLORS";
-import { onBoardingITem } from "../utilities/OnboardingItem";
+import { onBoardingITem } from "../../utilities/OnboardingItem";
 import { LinearGradient } from "expo-linear-gradient";
 import { useNavigation } from "@react-navigation/native";
-
-
+import { COLORS } from "../../constants/COLORS";
 
 const Slide = ({ item, windowHeight, windowWidth }) => {
   return (
@@ -64,24 +61,11 @@ const OnboardingScreen = () => {
       return "center";
     } else if (currentSlideIndex === 2) {
       return "center";
-    } {
+    }
+    {
       return "space-between";
     }
   }
-
-  const OnBoardingHeader = () => {
-    return (
-      <View style={styles.onBoardingHeader}>
-        <Text />
-        <TouchableOpacity onPress={() => {
-          navigation.navigate("Sigup")
-        }}>
-          <Text style={styles.textPurple}>Skip</Text>
-        </TouchableOpacity>
-      </View>
-    );
-  };
-  
 
   const Footer = () => {
     return (
@@ -94,7 +78,8 @@ const OnboardingScreen = () => {
       >
         <View style={styles.indicatorContainer}>
           {onBoardingITem.map((_, index) => (
-            <LinearGradient key={index}
+            <LinearGradient
+              key={index}
               colors={[
                 currentSlideIndex >= index
                   ? ("#FBFF3F",
@@ -128,34 +113,60 @@ const OnboardingScreen = () => {
           >
             {currentSlideIndex > 0 && (
               <TouchableOpacity onPress={goBackSlide} style={styles.button}>
-                <Image source={require("../../assets/arrows/arrowleft.png")} />
+                <Image
+                  source={require("../../../assets/arrows/arrowleft.png")}
+                />
               </TouchableOpacity>
             )}
 
             {currentSlideIndex <= 1 && (
               <TouchableOpacity onPress={goNextSlide} style={styles.button}>
-                <Image source={require("../../assets/arrows/arrowright.png")} />
+                <Image
+                  source={require("../../../assets/arrows/arrowright.png")}
+                />
               </TouchableOpacity>
             )}
           </View>
           {currentSlideIndex === 2 && (
-            <TouchableOpacity onPress={() => {
-              navigation.navigate("Signup")
-            }} style={{
-            backgroundColor: COLORS.purple,
-            paddingVertical: 15,
-            marginTop: 30,
-            borderRadius: 8,
-          }}>
-            <Text style={{
-              textAlign: 'center',
-              color: 'white',
-              fontSize: 16,
-            }}>Get Started</Text>
-          </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate("Signup");
+              }}
+              style={{
+                backgroundColor: COLORS.purple,
+                paddingVertical: 15,
+                marginTop: 30,
+                borderRadius: 8,
+              }}
+            >
+              <Text
+                style={{
+                  textAlign: "center",
+                  color: "white",
+                  fontSize: 16,
+                }}
+              >
+                Get Started
+              </Text>
+            </TouchableOpacity>
           )}
-          
         </View>
+      </View>
+    );
+  };
+  const OnBoardingHeader = () => {
+    return (
+      <View style={styles.onBoardingHeader}>
+        <Text />
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate("Signup");
+          }}
+        >
+          {currentSlideIndex <= 1 && (
+            <Text style={styles.textPurple}>Skip</Text>
+          )}
+        </TouchableOpacity>
       </View>
     );
   };
@@ -166,44 +177,46 @@ const OnboardingScreen = () => {
     // console.log(contentOffSetX);
     const currentIndex = Math.round(contentOffSetX / windowWidth);
     setCurrentSlideIndex(currentIndex);
-  }
+  };
 
   const goNextSlide = () => {
     const nextSlideIndex = currentSlideIndex + 1;
     const offset = nextSlideIndex * windowWidth;
-    ref?.current?.scrollToOffset({offset: offset});
+    ref?.current?.scrollToOffset({ offset: offset });
     setCurrentSlideIndex((prev) => prev + 1);
-  } 
+  };
 
   const goBackSlide = () => {
     const prevSlideIndex = currentSlideIndex - 1;
     const offset = prevSlideIndex * windowWidth;
-    ref?.current?.scrollToOffset({offset: offset});
-    setCurrentSlideIndex(prev => prev - 1);
-  }
+    ref?.current?.scrollToOffset({ offset: offset });
+    setCurrentSlideIndex((prev) => prev - 1);
+  };
 
   return (
     <SafeAreaView>
-      <View style={{
-        marginTop: Platform.OS === 'android' ? 30 : 0
-      }}>
-      <OnBoardingHeader />
-      <FlatList
-      ref={ref}
-      onMomentumScrollEnd={updateCurrentSlideIndex}
-        pagingEnabled
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        data={onBoardingITem}
-        renderItem={({ item }) => (
-          <Slide
-            windowHeight={windowHeight}
-            windowWidth={windowWidth}
-            item={item}
-          />
-        )}
-      />
-      <Footer />
+      <View
+        style={{
+          marginTop: Platform.OS === "android" ? 30 : 0,
+        }}
+      >
+        <OnBoardingHeader />
+        <FlatList
+          ref={ref}
+          onMomentumScrollEnd={updateCurrentSlideIndex}
+          pagingEnabled
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          data={onBoardingITem}
+          renderItem={({ item }) => (
+            <Slide
+              windowHeight={windowHeight}
+              windowWidth={windowWidth}
+              item={item}
+            />
+          )}
+        />
+        <Footer />
       </View>
     </SafeAreaView>
   );

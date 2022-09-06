@@ -7,11 +7,11 @@ import {
   TouchableHighlight,
   View,
 } from "react-native";
-import React, { useState } from "react";
-import Container from "../components/Container";
-import CustomInput from "../components/CustomInput";
-import { COLORS } from "../constants/COLORS";
-import CustomButton from "../components/CustomButton";
+import React, { useEffect, useRef, useState } from "react";
+import Container from "../../components/Container";
+import CustomInput from "../../components/CustomInput";
+import { COLORS } from "../../constants/COLORS";
+import CustomButton from "../../components/CustomButton";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 
@@ -22,6 +22,7 @@ const SignUp = () => {
   });
   const [showPassword, setShowPassword] = useState(true);
   const navigation = useNavigation();
+  const [isLoading, setLoading] = useState(false);
 
   const onChange = ({ name, value }) => {
     setForm({ ...form, [name]: value });
@@ -35,14 +36,25 @@ const SignUp = () => {
       });
     }
   };
+  const mounted = useRef(false);
+
+  useEffect(() => {
+     mounted.current = true;
+    if (mounted.current) {
+      setForm({});
+    }
+    return () => {
+      mounted.current = false;
+    }
+  }, [])
 
   const handleSignup = () => {
-    if (form.name === "") {
+    if (!form.name) {
       setErrors((prev) => {
         return { ...prev, name: "Ensure that you enter your name**" };
       });
     }
-    if (form.phone_number === "") {
+    if (!form.phone_number) {
       setErrors((prev) => {
         return {
           ...prev,
@@ -50,12 +62,12 @@ const SignUp = () => {
         };
       });
     }
-    if (form.email === "") {
+    if (!form.email) {
       setErrors((prev) => {
         return { ...prev, email: "Ensure that you enter your phone email**" };
       });
     }
-    if (form.password === "") {
+    if (!form.password) {
       setErrors((prev) => {
         return {
           ...prev,
@@ -66,12 +78,7 @@ const SignUp = () => {
   };
 
   const getDisabledStatus = () => {
-    if (
-      form.name === "" ||
-      form.phone_number === "" ||
-      form.email === "" ||
-      form.password === ""
-    ) {
+    if (isLoading) {
       return true;
     } else {
       return false;
@@ -86,16 +93,16 @@ const SignUp = () => {
             <Text style={styles.SocialitesText}>Sign Up with Google</Text>
             <Image
               style={styles.SocialitesImg}
-              source={require("../../assets/googgle.png")}
+              source={require("../../../assets/googgle.png")}
             />
           </View>
         </TouchableHighlight>
         <TouchableHighlight style={styles.SocialitesContainer}>
           <View style={styles.Socialites}>
-            <Text style={styles.SocialitesText}>Sign Up with Google</Text>
+            <Text style={styles.SocialitesText}>Sign In with Facebook</Text>
             <Image
               style={styles.SocialitesImg}
-              source={require("../../assets/logos_facebook.png")}
+              source={require("../../../assets/logos_facebook.png")}
             />
           </View>
         </TouchableHighlight>
@@ -175,7 +182,7 @@ const SignUp = () => {
             <CustomButton
               disabled={getDisabledStatus()}
               onPress={handleSignup}
-              title="Sign Up"
+              title={isLoading ? "Please wait.." : "Sign Up"}
             />
           </View>
           <View style={styles.orContainer}>
