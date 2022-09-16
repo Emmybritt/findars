@@ -45,7 +45,7 @@ const ForgotPasspord = () => {
           marginBottom: 44,
           marginTop: 10,
         }}>
-        <Image source={require('../../../assets/find.png')} />
+        <Image source={require('../../../assets/FINDARlogo.png')} />
       </View>
         <View>
           <Text style={styles.HeaderText}>Forgot Password</Text>

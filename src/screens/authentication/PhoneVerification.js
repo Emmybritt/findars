@@ -1,20 +1,13 @@
-import {
-  Image,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TextInput,
-  View,
-} from "react-native";
-import React, { useRef, useState } from "react";
-import Container from "../../components/Container";
-import CustomInput from "../../components/CustomInput";
-import CustomButton from "../../components/CustomButton";
-import { COLORS } from "../../constants/COLORS";
-import SuccessScreen from "../../components/SuccessScreen";
-import { useNavigation } from "@react-navigation/native";
+import { Image, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native'
+import React, { useRef, useState } from 'react'
+import Container from '../../components/Container'
+import CustomButton from '../../components/CustomButton'
+import { useNavigation } from '@react-navigation/native'
+import { COLORS } from '../../constants/COLORS'
+import SuccessScreen from '../../components/SuccessScreen'
 
-const VerifyResetPassword = () => {
+const PhoneVerification = () => {
+
   const [isLoading, setLoading] = useState();
   const [pin1, setPin1] = useState("");
   const [pin2, setPin2] = useState("");
@@ -24,6 +17,19 @@ const VerifyResetPassword = () => {
 
   const navigation = useNavigation();
 
+  function handleVerifyNumber() {
+    setLoading(true);
+    setShow(true);
+    setTimeout(() => {
+    setLoading(false);
+    setShow(false);
+    navigation.navigate("home-screen")
+    }, 800);
+  }
+  function getDisabledStatus() {
+    
+  }
+
 
 
   const pin1Ref = useRef(null);
@@ -31,17 +37,6 @@ const VerifyResetPassword = () => {
   const pin3Ref = useRef(null);
   const pin4Ref = useRef(null);
 
-
-  function getDisabledStatus() {}
-  function handleResetPassword() {
-    setShow(true)
-    setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-      setShow(false);
-      navigation.navigate("create-new-password")
-    }, 800);
-  }
   function handleUnBlur() {
 
   }
@@ -63,7 +58,7 @@ const VerifyResetPassword = () => {
           <Image source={require("../../../assets/FINDARlogo.png")} />
         </View>
         <View>
-          <Text style={styles.HeaderText}>Forgot Password</Text>
+          <Text style={styles.HeaderText}>Verify It Is You</Text>
         </View>
         <View style={{}}>
           <Text
@@ -74,7 +69,7 @@ const VerifyResetPassword = () => {
               marginHorizontal: 30,
             }}
           >
-            A four- digit code has been sent to *******0031 input the code below
+            Input the four-digit code send to your phone number 
           </Text>
         </View>
         <View>
@@ -131,19 +126,22 @@ const VerifyResetPassword = () => {
           >
             <CustomButton
               disabled={getDisabledStatus()}
-              onPress={handleResetPassword}
-              title={isLoading ? "Please wait..." : "Proceed"}
+              onPress={handleVerifyNumber}
+              title={isLoading ? "Please wait..." : "Verify"}
             />
-            <Text style={styles.lastText}>Resend code to email </Text>
+            <Text style={styles.lastText}>Resend verification Code</Text>
           </View>
           {/* <LoginFooter /> */}
         </View>
       </ScrollView>
+      {shouldShow && (
+        <SuccessScreen title={"Verification Successfull"} />
+      )}
     </Container>
-  );
-};
+  )
+}
 
-export default VerifyResetPassword;
+export default PhoneVerification
 
 const styles = StyleSheet.create({
   HeaderText: {

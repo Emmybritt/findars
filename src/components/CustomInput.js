@@ -9,13 +9,14 @@ const CustomInput = ({
   onChangeText,
   error,
   iconRight,
+  style,
   ...props
 }) => {
   return (
     <View>
       <View>
         <Text style={styles.label}>{label && label}</Text>
-        <View style={styles.textInputContainer}>
+        <View style={[styles.textInputContainer, style]}>
           <TextInput
             autoCapitalize="none"
             value={value}
