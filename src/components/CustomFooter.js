@@ -1,4 +1,4 @@
-import { Image, StyleSheet, Text, TouchableHighlight, View } from 'react-native'
+import { Image, StyleSheet, Text, TouchableNativeFeedback, View } from 'react-native'
 import React from 'react'
 import { COLORS } from '../constants/COLORS';
 import { AntDesign, Feather, FontAwesome5 } from '@expo/vector-icons';
@@ -8,26 +8,26 @@ const CustomFooter = () => {
   const navigation = useNavigation();
   return (
     <View style={styles.footerContainer}>
-      <TouchableHighlight onPress={() => {
+      <TouchableNativeFeedback onPress={() => {
         navigation.navigate("home-screen")
       }}>
       <AntDesign name="home" size={24} color="white" />
-      </TouchableHighlight>
-      <TouchableHighlight onPress={() => {
+      </TouchableNativeFeedback>
+      <TouchableNativeFeedback onPress={() => {
         navigation.navigate("favourites")
       }}>
       <AntDesign name="hearto" size={24} color="white" />
-      </TouchableHighlight>
-      <TouchableHighlight onPress={() => {
+      </TouchableNativeFeedback>
+      <TouchableNativeFeedback onPress={() => {
         navigation.navigate("messages")
       }}>
       <Feather name="message-square" size={24} color="white" />
-      </TouchableHighlight>
-      <TouchableHighlight onPress={() => {
+      </TouchableNativeFeedback>
+      <TouchableNativeFeedback onPress={() => {
         navigation.navigate("histories")
       }}>
       <FontAwesome5 name="history" size={24} color="white" />
-      </TouchableHighlight>
+      </TouchableNativeFeedback>
       
     </View>
   )

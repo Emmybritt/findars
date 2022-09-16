@@ -95,7 +95,7 @@ const Favourites = () => {
             <Text style={styles.artisanTittle}>{item.name}</Text>
             </View>
             <View>
-            <AntDesign name="hearto" size={24} color={COLORS.purple} />
+            <AntDesign name="heart" size={24} color={COLORS.purple} />
             </View>
           </View>
           <View style={{
